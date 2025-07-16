@@ -1,0 +1,31 @@
+---
+# maintains directories and paths
+node_home_dir: /opt/{{ service_identifier }}
+
+node_bin_dir: "{{ node_home_dir }}/bin"
+node_data_dir: "{{ node_home_dir }}/data"
+node_env_dir: "{{ node_home_dir }}/environment"
+node_key_dir: "{{ node_home_dir }}/key"
+node_log_dir: "{{ node_home_dir }}/log"
+
+node_accounts_dir: "{{ node_data_dir }}/accounts"
+node_ledger_dir: "{{ node_data_dir }}/ledger"
+node_snapshots_dir: "{{ node_data_dir }}/snapshots"
+
+node_directories:
+  - "{{ node_home_dir }}"
+  - "{{ node_bin_dir }}"
+  - "{{ node_data_dir }}"
+  - "{{ node_env_dir }}"
+  - "{{ node_key_dir }}"
+  - "{{ node_log_dir }}"
+  - "{{ node_accounts_dir }}"
+  - "{{ node_ledger_dir }}"
+  - "{{ node_snapshots_dir }}"
+
+node_log_file_path: "{{ node_log_dir }}/{{ service_identifier }}.log"
+
+node_validator_keypair_file_path: "{{ node_key_dir }}/{{ node_validator_keypair_file_name }}"
+node_vote_account_keypair_file_path: "{{ node_key_dir }}/{{ node_vote_account_keypair_file_name }}"
+
+node_environment_general_file_path: "{{ node_env_dir }}/{{ node_environment_general_file_name }}"

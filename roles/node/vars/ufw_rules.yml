@@ -1,0 +1,13 @@
+---
+node_ufw_rules:
+  - port: "{{ solana.validator.ports.dynamic_port_range | replace('-', ':') }}"
+    proto: tcp
+    rule: allow
+    from: any
+    comment: dynamic_port_range
+
+  - port: "{{ solana.validator.ports.dynamic_port_range | replace('-', ':') }}"
+    proto: udp
+    rule: allow
+    from: any
+    comment: dynamic_port_range

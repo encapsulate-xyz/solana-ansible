@@ -1,0 +1,21 @@
+---
+# maintains file name, binary names, and anything which is not a directory or path
+
+# key file names
+node_validator_keypair_file_name: validator-keypair.json
+node_vote_account_keypair_file_name: vote-account-keypair.json
+
+# environment file names
+node_environment_general_file_name: "{{ service_identifier }}.env"
+
+# binary names
+node_binaries:
+  solana_default:
+    default_binary_name: "agave-validator"
+    dest_binary_name: "{{ service_identifier }}"
+  solana_keystore:
+    default_binary_name: "solana-keygen"
+    dest_binary_name: "solana-keygen"
+  solana_cli:
+    default_binary_name: "solana"
+    dest_binary_name: "solana-cli"
