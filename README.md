@@ -164,10 +164,10 @@ vault:
 3. Then run the playbook:
 
   ```bash
-  ansible-playbook setup_node.yml -l validator.solana.mainnet.encapsulate.xyz -e "fetch_validator_keys=true snapshot_fetch=true"
+  ansible-playbook setup_node.yml -l validator.solana.mainnet.encapsulate.xyz -e "fetch_validator_keys=true fetch_snapshot=true"
   ```
 
-**Note**: The variable `fetch_validator_keys` enables fetching secrets from HCP Vault, while `snapshot_fetch` allows syncing from a snapshot when setting up the validator for the first time.
+**Note**: The variable `fetch_validator_keys` enables fetching secrets from HCP Vault, while `fetch_snapshot` allows syncing from a snapshot when setting up the validator for the first time.
 
 After you run the playbook, it will ask for confirmation, displaying all the variables and the IP address or DNS of the server you are going to deploy.
 
