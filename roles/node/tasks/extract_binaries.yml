@@ -1,0 +1,48 @@
+---
+- name: Create a tmp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}/{{ project }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Download and unarchive the binary
+  vars:
+    suffix_url: >
+      {{ vars[project][type].version }}/solana-release-{{ ansible_architecture }}-unknown-{{ ansible_system | lower }}-gnu.tar.bz2
+  ansible.builtin.unarchive:
+    src: "{{ vars[project][type].source_url }}/{{ suffix_url }}"
+    dest: "{{ tmp_dir }}/{{ project }}"
+    remote_src: true
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Copy the binary files
+  ansible.builtin.copy:
+    src: "{{ item.extracted_path }}"
+    dest: "{{ item.dest_path }}"
+    remote_src: true
+    owner: root
+    group: root
+    force: true
+    mode: "0755"
+  with_items: "{{ path_mapping }}"
+  notify:
+    - Restart service
+
+- name: Copy the perf-libs directory
+  ansible.builtin.copy:
+    src: "{{ tmp_dir }}/{{ project }}/solana-release/bin/perf-libs"
+    dest: "{{ node_bin_dir }}"
+    remote_src: true
+    owner: root
+    group: root
+    force: true
+    mode: "0755"
+
+- name: Clean up the temporary files in /tmp
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}/{{ project }}"
+    state: absent

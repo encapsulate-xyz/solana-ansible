@@ -1,0 +1,65 @@
+---
+- name: Include the ufw vars file
+  ansible.builtin.include_vars:
+    file: vars/ufw_rules.yml
+
+- name: Apply UFW rules
+  ansible.builtin.include_tasks: tasks/apply_ufw_rules.yml
+  loop: "{{ node_ufw_rules }}"
+
+- name: Include user creation task
+  ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
+  vars:
+    home: "{{ node_home_dir }}"
+    directories: "{{ node_directories }}"
+    log_file_path: "{{ node_log_file_path }}"
+
+- name: Include Extract Binaries task
+  ansible.builtin.include_tasks: extract_binaries.yml
+  vars:
+    extracted_dir: "{{ tmp_dir }}/{{ project }}/solana-release/bin"
+    path_mapping:
+      - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_default.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ service_identifier }}"
+      - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_keystore.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_keystore.dest_binary_name }}"
+      - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_cli.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_cli.dest_binary_name }}"
+
+- name: Fetch secrets from HCP Vault and save to files
+  when: fetch_validator_keys | default(false) | bool
+  block:
+    - name: Fetch validator key pair and save
+      ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
+      vars:
+        vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_validator_keypair_file_name }}"
+        secret_destination_path: "{{ node_validator_keypair_file_path }}"
+        secret_type: json
+
+    - name: Fetch vote account keypair key and save
+      ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
+      vars:
+        vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_vote_account_keypair_file_name }}"
+        secret_destination_path: "{{ node_vote_account_keypair_file_path }}"
+        secret_type: json
+
+- name: Copy environment file
+  ansible.builtin.template:
+    src: "{{ env }}/general.env.j2"
+    dest: "{{ node_environment_general_file_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart service
+
+- name: Copy systemd service file
+  ansible.builtin.template:
+    src: "{{ env }}/systemd.service.j2"
+    dest: /etc/systemd/system/{{ service_identifier }}.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload service
+    - Restart service

@@ -1,0 +1,56 @@
+[Unit]
+Description={{ service_identifier }}
+StartLimitIntervalSec=0
+
+[Service]
+User={{ service_identifier }}
+Group={{ project }}
+WorkingDirectory={{ node_home_dir }}
+EnvironmentFile={{ node_environment_general_file_path }}
+ExecStart={{ node_bin_dir }}/{{ service_identifier }} \
+--identity {{ node_validator_keypair_file_path }} \
+--vote-account {{ node_vote_account_keypair_file_path }} \
+{% if solana.validator.known_validators %}
+{% for known_validator in solana.validator.known_validators %}
+--known-validator {{ known_validator }} \
+{% endfor %}
+{% endif %}
+--only-known-rpc \
+--log {{ node_log_file_path }} \
+--ledger {{ node_ledger_dir }} \
+--accounts {{ node_accounts_dir }} \
+--snapshots {{ node_snapshots_dir }} \
+--rpc-port {{ solana.validator.ports.rpc_port }} \
+--dynamic-port-range {{ solana.validator.ports.dynamic_port_range }} \
+{% if solana.validator.entrypoints %}
+{% for entrypoint in solana.validator.entrypoints %}
+--entrypoint {{ entrypoint }} \
+{% endfor %}
+{% endif %}
+--expected-genesis-hash {{ solana.validator.expected_genesis_hash }} \
+--wal-recovery-mode skip_any_corrupted_record \
+{% if solana.validator.limit_ledger_size | default('', true) | trim != '' %}
+--limit-ledger-size {{ solana.validator.limit_ledger_size }} \
+{% endif %}
+{% if not fetch_snapshot | default(false) %}
+--no-snapshot-fetch \
+{% endif %}
+--tip-payment-program-pubkey {{ solana.validator.tip_payment_program_pubkey }} \
+--tip-distribution-program-pubkey {{ solana.validator.tip_distribution_program_pubkey }} \
+--merkle-root-upload-authority {{ solana.validator.merkle_root_upload_authority }} \
+--commission-bps {{ solana.validator.commission_bps }} \
+--relayer-url {{ solana.validator.relayer_url }} \
+--block-engine-url {{ solana.validator.block_engine_url }} \
+--shred-receiver-address {{ solana.validator.shred_receiver_address }}
+
+ExecStop={{ node_bin_dir }}/{{ service_identifier }} \
+--ledger {{ node_ledger_dir }} \
+exit --monitor
+
+Restart=always
+RestartSec=4
+LimitNOFILE=1000000
+MemoryMax=256G
+
+[Install]
+WantedBy=multi-user.target
