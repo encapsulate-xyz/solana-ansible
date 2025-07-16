@@ -14,7 +14,6 @@ solana:
       - entrypoint3.testnet.solana.com:8001
     expected_genesis_hash: 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY
     limit_ledger_size:  ''
-    no_snapshot_fetch: false
     tip_payment_program_pubkey: GJHtFqM9agxPmkeKjHny6qiRKrXZALvvFGiKf11QE7hy
     tip_distribution_program_pubkey: F2Zu7QZiTYUhPd7u9ukRVwxh7B71oA3NMJcHuCHc29P2
     merkle_root_upload_authority: GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
