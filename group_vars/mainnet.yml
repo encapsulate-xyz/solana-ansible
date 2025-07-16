@@ -1,9 +1,26 @@
 ---
 # maintains versions and can overwrite all.yml
-sui:
+solana:
   validator:
-    version: c9ae0f9282a0643544db27409e07d3ac5dd09105
-  fullnode:
-    version: c9ae0f9282a0643544db27409e07d3ac5dd09105
-  bridge:
-    version: 08a4ef986fdf44a2233f010c5e3764ae888c54a2
+    version: v2.2.19-jito
+    known_validators:
+      - 7Np41oeYqPefeNQEHSv1UDhYrehxin3NStELsSKCT4K2
+      - GdnSyH3YtwcxFvQrVVJMm1JhTS4QVX7MFsX56uJLUfiZ
+      - DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ
+      - CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S
+    entrypoints:
+      - entrypoint.mainnet-beta.solana.com:8001
+      - entrypoint2.mainnet-beta.solana.com:8001
+      - entrypoint3.mainnet-beta.solana.com:8001
+      - entrypoint4.mainnet-beta.solana.com:8001
+      - entrypoint5.mainnet-beta.solana.com:8001
+    expected_genesis_hash: 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d
+    limit_ledger_size:  ''
+    no_snapshot_fetch: false
+    tip_payment_program_pubkey: T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt
+    tip_distribution_program_pubkey: 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7
+    merkle_root_upload_authority: GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
+    commission_bps: 800
+    relayer_url: http://amsterdam.mainnet.relayer.jito.wtf:8100
+    block_engine_url: https://mainnet.block-engine.jito.wtf
+    shred_receiver_address: 74.118.140.240:1002
