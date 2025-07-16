@@ -21,6 +21,7 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} \
 --accounts {{ node_accounts_dir }} \
 --snapshots {{ node_snapshots_dir }} \
 --rpc-port {{ solana.validator.ports.rpc_port }} \
+--private-rpc \
 --dynamic-port-range {{ solana.validator.ports.dynamic_port_range }} \
 {% if solana.validator.entrypoints %}
 {% for entrypoint in solana.validator.entrypoints %}
