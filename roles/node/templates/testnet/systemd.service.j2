@@ -44,8 +44,7 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} \
 
 ExecStop={{ node_bin_dir }}/{{ service_identifier }} \
 --ledger {{ node_ledger_dir }} \
---monitor \
-exit
+exit --monitor
 
 Restart=always
 RestartSec=4
