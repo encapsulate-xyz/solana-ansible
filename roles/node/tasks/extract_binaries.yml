@@ -42,7 +42,7 @@
     force: true
     mode: "0755"
 
-# - name: Clean up the temporary files in /tmp
-#   ansible.builtin.file:
-#     path: "{{ tmp_dir }}/{{ project }}"
-#     state: absent
+- name: Clean up the temporary files in /tmp
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}/{{ project }}"
+    state: absent
