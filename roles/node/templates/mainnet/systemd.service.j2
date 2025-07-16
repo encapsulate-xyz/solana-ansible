@@ -31,7 +31,7 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} \
 {% if solana.validator.limit_ledger_size | default('', true) | trim != '' %}
 --limit-ledger-size {{ solana.validator.limit_ledger_size }} \
 {% endif %}
-{% if solana.validator.no_snapshot_fetch | default(false) %}
+{% if not snapshot_fetch | default(false) %}
 --no-snapshot-fetch \
 {% endif %}
 --tip-payment-program-pubkey {{ solana.validator.tip_payment_program_pubkey }} \
