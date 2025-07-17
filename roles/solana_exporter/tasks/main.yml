@@ -1,0 +1,39 @@
+---
+- name: Include the ufw vars file
+  ansible.builtin.include_vars:
+    file: vars/ufw_rules.yml
+
+- name: Apply UFW rules
+  ansible.builtin.include_tasks: tasks/apply_ufw_rules.yml
+  loop: "{{ solana_exporter_rules }}"
+
+- name: Include user creation task
+  ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
+  vars:
+    home: "{{ solana_exporter_home_dir }}"
+    directories: "{{ solana_exporter_directories }}"
+    log_file_path: "{{ solana_exporter_log_file_path }}"
+
+- name: Include clone repo task
+  ansible.builtin.include_tasks: clone_repo.yml
+
+- name: Copy Solana Exporter config
+  ansible.builtin.template:
+    src: config.yml.j2
+    dest: "{{ solana_exporter_config_file_path }}"
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0644"
+  notify:
+    - Restart service
+
+- name: Copy Solana Exporter service file
+  ansible.builtin.template:
+    src: solana_exporter.service.j2
+    dest: /etc/systemd/system/{{ service_identifier }}.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload service
+    - Restart service

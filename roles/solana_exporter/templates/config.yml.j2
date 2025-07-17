@@ -1,0 +1,12 @@
+pub_key: {{ solana.exporter.pub_key }}
+vote_pub_key: {{ solana.exporter.vote_pub_key }}
+network_rpc_endpoint: {{ solana.exporter.network_rpc_endpoint }}
+validator_rpc_endpoint: {{ solana.exporter.validator_rpc_endpoint }}
+solana_binary_path: {{ solana.exporter.solana_binary_path }}
+
+sleep_time: 45
+metric_port: {{ solana.exporter.ports.metric_port }}
+
+thread_pool_size: 2
+log_level: DEBUG
+retry: 10

@@ -21,3 +21,10 @@ solana:
     relayer_url: http://dallas.testnet.relayer.jito.wtf:8100
     block_engine_url: https://testnet.block-engine.jito.wtf
     shred_receiver_address: 141.98.218.12:1002
+  exporter:
+    version: main
+    validator_rpc_endpoint: http://localhost:8899
+    network_rpc_endpoint: https://api.testnet.solana.com
+    pub_key:
+    vote_pub_key:
+    solana_binary_path: /opt/solana/bin/solana-cli

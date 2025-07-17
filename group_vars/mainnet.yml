@@ -23,3 +23,10 @@ solana:
     relayer_url: http://amsterdam.mainnet.relayer.jito.wtf:8100
     block_engine_url: https://mainnet.block-engine.jito.wtf
     shred_receiver_address: 74.118.140.240:1002
+  exporter:
+    version: main
+    validator_rpc_endpoint: http://localhost:8899
+    network_rpc_endpoint: https://api.mainnet-beta.solana.com
+    pub_key:
+    vote_pub_key:
+    solana_binary_path: /opt/solana/bin/solana-cli

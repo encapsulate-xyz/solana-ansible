@@ -1,0 +1,13 @@
+---
+solana_exporter_home_dir: /opt/{{ service_identifier }}
+
+solana_exporter_bin_dir: "{{ solana_exporter_home_dir }}/bin"
+solana_exporter_log_dir: "{{ solana_exporter_home_dir }}/log"
+
+solana_exporter_directories:
+  - "{{ solana_exporter_home_dir }}"
+  - "{{ solana_exporter_log_dir }}"
+
+solana_exporter_log_file_path: "{{ solana_exporter_log_dir }}/{{ service_identifier }}.log"
+
+solana_exporter_config_file_path: "{{ solana_exporter_bin_dir }}/{{ solana_exporter_config_file_name }}"
