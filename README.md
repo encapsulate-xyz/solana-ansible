@@ -78,78 +78,40 @@ This playbook allows customization through several variables. You can define the
 
 - **`group_vars/all.yml`**: Contains all the source urls, ports and configurations.
 
-```
----
-# maintains ports, bianry or repo urls
-
-org: your_org
-domain_regex: ^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$
-monitor_server_dns: update_the_dns_of_our_monitor_server
-ansible_port: update_your_server_ssh_port
-
-architecture_map:
-  x86_64: amd64
-  aarch64: arm64
-
-default_node_types:
-  - validator
-  - default
-
-tmp_dir: /tmp
-
-solana:
-  validator:
-    source_url: https://github.com/jito-foundation/jito-solana/releases/download
-    ports:
-      rpc_port: 8899    # You can define the rpc port of your wish
-      dynamic_port_range: 8000-8020     # You can configure a dynamic port range for Solana to use. It’s recommended to have at least 20 free ports available for for solana to utilize
-```
+| Name                                         | Default Value                                                       | Description                                                  |
+|----------------------------------------------|----------------------------------------------------------------------|--------------------------------------------------------------|
+| `org`                                        | `encapsulate`                                                       | Organization name used for internal config                   |
+| `domain_regex`                               | `^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$`                                   | Regex pattern to validate domain names                       |
+| `monitor_server_dns`                         | `monitor.encapsulate.xyz`                                           | DNS address of the monitoring server                         |
+| `ansible_port`                               | `8192`                                                               | SSH port used by Ansible to connect to nodes                 |
+| `solana.validator.source_url`                | `https://github.com/jito-foundation/jito-solana/releases/download` | Source URL to download the Jito Solana validator binary      |
+| `solana.validator.ports.rpc_port`            | `8899`                                                               | Port used for JSON RPC interface                             |
+| `solana.validator.ports.dynamic_port_range`  | `8000–8020`                                                          | Range of dynamic ports used for validator communication      |
 
 - **`group_vars/mainnet.yml`** or **`group_vars/testnet.yml`**: Contains network specific variables.
-```
----
-# maintains versions and can overwrite all.yml
-solana:
-  validator:
-    version: the_latest_jito_client_version
-    known_validators:
-      - add
-      - known
-      - validators
-      - [refererence](https://docs.anza.xyz/clusters/available)
-    entrypoints:
-      - add
-      - entrypoints
-      - [refererence](https://docs.anza.xyz/clusters/available)
-    expected_genesis_hash: [refererence](https://docs.anza.xyz/clusters/available)
-    limit_ledger_size:  [refererence](https://github.com/agjell/sol-tutorials/blob/master/solana-validator-faq.md#6b-how-big-is-the-ledger-how-much-storage-space-do-i-need-for-my-validator)
-    tip_payment_program_pubkey: [refererence](https://jito-foundation.gitbook.io/mev/jito-solana/command-line-arguments)
-    tip_distribution_program_pubkey: [refererence](https://jito-foundation.gitbook.io/mev/jito-solana/command-line-arguments)
-    merkle_root_upload_authority: [refererence](https://jito-foundation.gitbook.io/mev/jito-solana/command-line-arguments)
-    commission_bps: set_your_desired_commision_rate
-    relayer_url: [refererence](https://jito-foundation.gitbook.io/mev/jito-solana/command-line-arguments)
-    block_engine_url: [refererence](https://jito-foundation.gitbook.io/mev/jito-solana/command-line-arguments)
-    shred_receiver_address: [refererence](https://jito-foundation.gitbook.io/mev/jito-solana/command-line-arguments)
-```
+
+| Name                                         | Default Value                                                        | Description                                                                                  |
+|----------------------------------------------|-----------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| `solana.validator.version`                   | `v2.2.19-jito`                                                        | Version of the Jito Solana validator binary                                                  |
+| `solana.validator.known_validators`          | `7Np41oeYqPefeNQEHSv1UDhYrehxin3NStELsSKCT4K2`,<br> `GdnSyH3YtwcxFvQrVVJMm1JhTS4QVX7MFsX56uJLUfiZ`,<br> `DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ`, <br> `CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S` | List of known validator identity pubkeys                                                    |
+| `solana.validator.entrypoints`               | `entrypoint.mainnet-beta.solana.com:8001`,<br> `entrypoint2.mainnet-beta.solana.com:8001`,<br> `entrypoint3.mainnet-beta.solana.com:8001`,<br> `entrypoint4.mainnet-beta.solana.com:8001`,<br> `entrypoint5.mainnet-beta.solana.com:8001` | List of validator network entrypoints                                                        |
+| `solana.validator.expected_genesis_hash`     | `5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d`                        | Expected genesis hash of the cluster                                                         |
+| `solana.validator.limit_ledger_size`         | *(empty string)*                                                     | Enables ledger pruning if set; currently disabled                                            |
+| `solana.validator.tip_payment_program_pubkey`| `T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt`                         | Public key for Jito tip payment program                                                      |
+| `solana.validator.tip_distribution_program_pubkey` | `4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7`                    | Public key for Jito tip distribution program                                                 |
+| `solana.validator.merkle_root_upload_authority` | `GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib`                    | Authority to upload merkle roots                                                             |
+| `solana.validator.commission_bps`            | `800`                                                                | Commission rate in basis points (800 = 8%)                                                   |
+| `solana.validator.relayer_url`               | `http://amsterdam.mainnet.relayer.jito.wtf:8100`                     | URL of the Jito relayer                                                                      |
+| `solana.validator.block_engine_url`          | `https://mainnet.block-engine.jito.wtf`                              | URL of the block engine                                                                      |
+| `solana.validator.shred_receiver_address`    | `74.118.140.240:1002`                                                | IP address and port to receive shreds                                                        |
 
 - **`group_vars/vault.yml`**: Store secret variables, such as HCP Vault url, passwords in this file.
 
-```
-# maintains anything sensitive like api keys
-vault:
-  default:
-    hcp:
-      vault:
-        url: "your_hcp_vault_url"
-  mainnet:
-    external:
-      metrics:
-        password: solana_mainnet_metrics_password
-  testnet:
-    external:
-      metrics:
-        password: solana_testnet_metrics_password
-```
+| Name                                      | Default Value                | Description                                                |
+|-------------------------------------------|-------------------------------|------------------------------------------------------------|
+| `vault.default.hcp.vault.url`             | `"your_hcp_vault_url"`        | URL of the HCP Vault used for secure secret storage        |
+| `vault.mainnet.external.metrics.password` | `solana_mainnet_metrics_password` | Password used to authenticate metrics access on mainnet   |
+| `vault.testnet.external.metrics.password` | `solana_testnet_metrics_password` | Password used to authenticate metrics access on testnet   |
 
 ### Usage
 
