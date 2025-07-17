@@ -1,4 +1,10 @@
 ---
+- name: Install python3-pip
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+    update_cache: yes
+
 - name: Delete bin directory
   ansible.builtin.file:
     path: "{{ solana_exporter_bin_dir }}"
