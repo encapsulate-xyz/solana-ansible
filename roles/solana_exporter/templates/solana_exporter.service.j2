@@ -9,7 +9,7 @@ ExecStart={{ solana_exporter_bin_dir }}/venv/bin/python -u {{ solana_exporter_bi
 Restart=always
 RestartSec=4
 LimitNOFILE=65536
-MemoryMax=64G
+MemoryMax=32G
 StandardOutput=append:{{ solana_exporter_log_file_path }}
 StandardError=inherit
 
