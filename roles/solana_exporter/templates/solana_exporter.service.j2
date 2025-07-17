@@ -1,0 +1,17 @@
+[Unit]
+Description=Solana Exporter Service
+
+[Service]
+User={{ service_identifier }}
+Group={{ service_identifier }}
+WorkingDirectory={{ solana_exporter_bin_dir }}
+ExecStart={{ solana_exporter_bin_dir }}/venv/bin/python -u {{ solana_exporter_bin_dir }}/main.py
+Restart=always
+RestartSec=4
+LimitNOFILE=65536
+MemoryMax=64G
+StandardOutput=append:{{ solana_exporter_log_file_path }}
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
