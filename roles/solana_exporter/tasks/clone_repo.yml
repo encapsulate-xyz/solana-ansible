@@ -13,7 +13,7 @@
 - name: Clone the solana exporter repository
   ansible.builtin.git:
     repo: "{{ solana.exporter.source_url }}"
-    dest: "{{ solana.exporter_bin_dir }}"
+    dest: "{{ solana_exporter_bin_dir }}"
     version: "{{ solana.exporter.version }}"
     force: true
 
