@@ -25,6 +25,6 @@ solana:
     version: main
     validator_rpc_endpoint: http://localhost:8899
     network_rpc_endpoint: https://api.testnet.solana.com
-    pub_key:
-    vote_pub_key:
+    pub_key: 5jhELc9wDMHSAzf3Vi61w4YAmbr1P7pUHTmfdG3Kfnxw
+    vote_pub_key: 9rE1sxfEUXVYH8UqN1Eustryoo9fHwWA78n9NPvMSKrK
     solana_binary_path: /opt/solana/bin/solana-cli
