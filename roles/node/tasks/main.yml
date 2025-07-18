@@ -34,14 +34,14 @@
       vars:
         vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_validator_keypair_file_name }}"
         secret_destination_path: "{{ node_validator_keypair_file_path }}"
-        secret_type: json
+        secret_type: key
 
     - name: Fetch vote account keypair key and save
       ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
       vars:
         vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_vote_account_keypair_file_name }}"
         secret_destination_path: "{{ node_vote_account_keypair_file_path }}"
-        secret_type: json
+        secret_type: key
 
 - name: Copy environment file
   ansible.builtin.template:
