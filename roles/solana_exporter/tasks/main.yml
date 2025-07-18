@@ -5,7 +5,7 @@
 
 - name: Apply UFW rules
   ansible.builtin.include_tasks: tasks/apply_ufw_rules.yml
-  loop: "{{ solana_exporter_rules }}"
+  loop: "{{ solana_exporter_ufw_rules }}"
 
 - name: Include user creation task
   ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
