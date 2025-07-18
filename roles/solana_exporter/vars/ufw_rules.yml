@@ -1,5 +1,5 @@
 solana_exporter_ufw_rules:
-  - port: "{{ solana.exporter.ports.metric_port }}"
+  - port: "{{ solana.exporter.ports.metrics_port }}"
     proto: tcp
     rule: allow
     from: "{{ monitor_server_dns }}"
