@@ -15,7 +15,7 @@ solana:
       - entrypoint4.mainnet-beta.solana.com:8001
       - entrypoint5.mainnet-beta.solana.com:8001
     expected_genesis_hash: 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d
-    limit_ledger_size:  ''
+    limit_ledger_size: ''
     tip_payment_program_pubkey: T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt
     tip_distribution_program_pubkey: 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7
     merkle_root_upload_authority: GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
