@@ -19,3 +19,6 @@ node_binaries:
   solana_cli:
     default_binary_name: "solana"
     dest_binary_name: "solana-cli"
+  solana_ledger_tool:
+    default_binary_name: "agave-ledger-tool"
+    dest_binary_name: "solana-ledger-tool"
