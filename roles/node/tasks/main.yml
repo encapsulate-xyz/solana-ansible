@@ -25,6 +25,8 @@
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_keystore.dest_binary_name }}"
       - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_cli.default_binary_name }}"
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_cli.dest_binary_name }}"
+      - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_ledger_tool.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_ledger_tool.dest_binary_name }}"
 
 - name: Fetch secrets from HCP Vault and save to files
   when: fetch_validator_keys | default(false) | bool
