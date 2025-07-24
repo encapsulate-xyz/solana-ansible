@@ -30,9 +30,6 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} \
 {% endif %}
 --expected-genesis-hash {{ solana.validator.expected_genesis_hash }} \
 --wal-recovery-mode skip_any_corrupted_record \
-{% if solana.validator.limit_ledger_size | default('', true) | trim != '' %}
---limit-ledger-size {{ solana.validator.limit_ledger_size }} \
-{% endif %}
 {% if not fetch_snapshot | default(false) %}
 --no-snapshot-fetch \
 {% endif %}
@@ -42,7 +39,8 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} \
 --commission-bps {{ solana.validator.commission_bps }} \
 --relayer-url {{ solana.validator.relayer_url }} \
 --block-engine-url {{ solana.validator.block_engine_url }} \
---shred-receiver-address {{ solana.validator.shred_receiver_address }}
+--shred-receiver-address {{ solana.validator.shred_receiver_address }} \
+--limit-ledger-size {{ solana.validator.limit_ledger_size }}
 
 ExecStop={{ node_bin_dir }}/{{ service_identifier }} \
 --ledger {{ node_ledger_dir }} \
