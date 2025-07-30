@@ -2,7 +2,7 @@
 # maintains versions and can overwrite all.yml
 solana:
   validator:
-    version: v2.2.19-jito
+    version: v2.3.6-jito
     known_validators:
       - 7Np41oeYqPefeNQEHSv1UDhYrehxin3NStELsSKCT4K2
       - GdnSyH3YtwcxFvQrVVJMm1JhTS4QVX7MFsX56uJLUfiZ
