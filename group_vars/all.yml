@@ -21,7 +21,7 @@ solana:
     source_url: https://github.com/jito-foundation/jito-solana/releases/download
     ports:
       rpc_port: 8899
-      dynamic_port_range: 8000-8020
+      dynamic_port_range: 8000-8030
   exporter:
     source_url: https://github.com/qskyhigh/solana-monitor-public
     ports:
