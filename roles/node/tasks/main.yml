@@ -19,12 +19,18 @@
   vars:
     extracted_dir: "{{ tmp_dir }}/{{ project }}/solana-release/bin"
     path_mapping:
-      - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_default.default_binary_name }}"
-        dest_path: "{{ node_bin_dir }}/{{ service_identifier }}"
       - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_keystore.default_binary_name }}"
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_keystore.dest_binary_name }}"
       - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_cli.default_binary_name }}"
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_cli.dest_binary_name }}"
+
+- name: Include Build Binaries task
+  ansible.builtin.include_tasks: build_binaries.yml
+  vars:
+    extracted_dir: "{{ tmp_dir }}/{{ project }}/target/release"
+    path_mapping:
+      - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_default.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ service_identifier }}"
       - extracted_path: "{{ extracted_dir }}/{{ node_binaries.solana_ledger_tool.default_binary_name }}"
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.solana_ledger_tool.dest_binary_name }}"
 
