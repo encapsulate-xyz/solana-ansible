@@ -7,7 +7,7 @@
 
 - name: Clone the repository to /tmp
   ansible.builtin.git:
-    repo: "{{ solana.validator.source_url }}"
+    repo: "{{ solana.validator.git_source_url }}"
     dest: "{{ tmp_dir }}/{{ project }}"
     version: "{{ solana.validator.version }}"
     recursive: true

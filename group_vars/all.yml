@@ -22,6 +22,7 @@ rust:
 
 solana:
   validator:
+    git_source_url: https://github.com/jito-foundation/jito-solana.git
     source_url: https://github.com/jito-foundation/jito-solana/releases/download
     ports:
       rpc_port: 8899
