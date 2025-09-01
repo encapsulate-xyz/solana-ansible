@@ -36,7 +36,6 @@
     PATH: "{{ rust.path }}/bin:{{ ansible_env.PATH }}"
     RUSTUP_HOME: "{{ rust.root }}/cargo"
     CARGO_HOME: "{{ rust.root }}/cargo"
-  when: mode == "cpu"
 
 - name: Copy the built binaries to the target directory
   ansible.builtin.copy:
