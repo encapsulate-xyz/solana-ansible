@@ -1,0 +1,56 @@
+---
+- name: Ensure tmp directory exists
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    mode: "1777"
+
+- name: Clone the repository to /tmp
+  ansible.builtin.git:
+    repo: "{{ solana.validator.source_url }}"
+    dest: "{{ tmp_dir }}/{{ project }}"
+    version: "{{ solana.validator.version }}"
+    recursive: true
+    force: true
+
+- name: Build agave-validator and agave-ledger-tool binaries
+  ansible.builtin.shell: |
+    cargo build --profile release \
+      --bin agave-validator \
+      --bin agave-ledger-tool \
+      --workspace \
+      --exclude agave-store-histogram \
+      --exclude agave-store-tool \
+      --exclude solana-accounts-cluster-bench \
+      --exclude solana-banking-bench \
+      --exclude solana-bench-tps \
+      --exclude solana-dos \
+      --exclude solana-local-cluster \
+      --exclude solana-transaction-dos \
+      --exclude solana-vortexor
+  args:
+    chdir: "{{ tmp_dir }}/{{ project }}"
+    executable: /bin/bash
+    creates: "{{ tmp_dir }}/{{ project }}/target/release/{{ node_binaries.solana_default.default_binary_name }}"
+  environment:
+    PATH: "{{ rust.path }}/bin:{{ ansible_env.PATH }}"
+    RUSTUP_HOME: "{{ rust.root }}/cargo"
+    CARGO_HOME: "{{ rust.root }}/cargo"
+  when: mode == "cpu"
+
+- name: Copy the built binaries to the target directory
+  ansible.builtin.copy:
+    src: "{{ item.extracted_path }}"
+    dest: "{{ item.dest_path }}"
+    mode: "0755"
+    owner: root
+    group: root
+    remote_src: true
+  with_items: "{{ path_mapping }}"
+  notify:
+    - Restart service
+
+- name: Clean up the temporary repository directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}/{{ project }}"
+    state: absent

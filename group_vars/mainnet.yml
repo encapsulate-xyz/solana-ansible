@@ -3,6 +3,8 @@
 solana:
   validator:
     version: v2.3.6-jito
+    rust:
+      version: 1.87.0
     known_validators:
       - 7Np41oeYqPefeNQEHSv1UDhYrehxin3NStELsSKCT4K2
       - GdnSyH3YtwcxFvQrVVJMm1JhTS4QVX7MFsX56uJLUfiZ
