@@ -13,11 +13,13 @@
     recursive: true
     force: true
 
-- name: Build agave-validator and agave-ledger-tool binaries
+- name: Build binaries
   ansible.builtin.shell: |
     cargo build --profile release \
       --bin agave-validator \
       --bin agave-ledger-tool \
+      --bin solana \
+      --bin solana-keygen \
       --workspace \
       --exclude agave-store-histogram \
       --exclude agave-store-tool \
