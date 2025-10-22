@@ -2,7 +2,7 @@
 # maintains versions and can overwrite all.yml
 solana:
   validator:
-    version: v3.0.2-jito
+    version: v3.0.6-jito.1
     rust:
       version: 1.87.0
     known_validators:
