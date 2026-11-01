@@ -1,0 +1,6 @@
+# This file contains ignores rule violations for ansible-lint
+roles/node/tasks/build_binaries.yml yaml[trailing-spaces]
+roles/prepare_server/tasks/main.yml no-changed-when
+roles/prepare_server/tasks/main.yml no-handler
+roles/prepare_server/tasks/main.yml var-naming[no-role-prefix]
+roles/solana_exporter/tasks/clone_repo.yml yaml[truthy]
