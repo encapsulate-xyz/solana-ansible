@@ -21,3 +21,13 @@
     - name: Include exporter role
       ansible.builtin.include_role:
         name: solana_exporter
+        public: true
+
+  post_tasks:
+    - name: Verify exporter
+      block:
+        - name: Include verify service task
+          ansible.builtin.include_tasks: tasks/verify_service.yml
+          vars:
+            log_file_path: "{{ solana_exporter_log_file_path }}"
+            health_url: "http://localhost:{{ solana.exporter.ports.metrics_port }}/metrics"

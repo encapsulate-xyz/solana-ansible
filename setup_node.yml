@@ -30,3 +30,18 @@
         - name: Include node role
           ansible.builtin.include_role:
             name: node
+            public: true
+
+  post_tasks:
+    - name: Verify node
+      when: type in allowed_node_types
+      block:
+        - name: Include verify service task
+          ansible.builtin.include_tasks: tasks/verify_service.yml
+          vars:
+            log_file_path: "{{ node_log_file_path }}"
+            version_command: "{{ node_bin_dir }}/{{ service_identifier }} --version"
+            expected_version: "{{ solana.validator.version | regex_replace('^v', '') | regex_replace('-.*$', '') }}"
+            health_url: "http://localhost:{{ solana.validator.ports.rpc_port }}/health"
+            # the RPC port opens only after the validator has loaded its snapshot
+            health_retries: 180
